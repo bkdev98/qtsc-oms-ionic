@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar class="toolbar-danger">
+    <ion-buttons left>
+      <button ion-button navPop>
+        <img src="assets/icon/back-white.png" height="30px;">
+      </button>
+    </ion-buttons>
+    <ion-title>Chi tiết công việc</ion-title>
+    <ion-buttons right>
+      <button ion-button>
+        <img src="assets/icon/refresh.png" height="30px;"></button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <div>
+      <ion-segment [(ngModel)]="view">
+        <ion-segment-button value="noidung">Nội dung</ion-segment-button>
+        <!-- <ion-segment-button value="file">File đính kèm</ion-segment-button> -->
+      </ion-segment>
+    </div>
+    <div [ngSwitch]="view" class="container chitiet" (swipe)="swipeEvent($event)">
+      <div *ngSwitchCase="'noidung'">
+        <h3>Người đi công tác: <span class="text-nomal">{{cv.nhansu}}</span></h3>
+        <div class="inline">
+          <div><img src="assets/icon/clock.png" class="ion-time-cv" height="25px"></div>
+          <div class="detail">
+            <p class="p-first-cv">{{cv.batdau | date: 'dd/MM/yyyy H:mm'}}</p>
+            <p class="p-last-cv">{{cv.ketthuc | date: 'dd/MM/yyyy H:mm'}}</p>
+          </div>
+        </div>
+        <ul class="list-unstyled">
+          <li><b>Người duyệt:</b> {{cv.ng_duyet}}</li>
+          <li><b>Loại hình phương tiện:</b> {{cv.phuongtien}}</li>
+          <li><b>Hành trình: {{cv.hanhtrinh}}</b>
+          <li><b>Mục đích:</b>
+          <br>
+          <p class="noidungcv">{{cv.mucdich}}</p></li>
+        </ul>
+      </div>
+      <div *ngSwitchCase="'file'">
+        <ion-list>
+          <!--<ion-item class="border-bottom">-->
+            <!--<span>Ten file la gi</span>-->
+            <!--<span style="float:right;"><img src="assets/icon/download.png" height="25px"></span>-->
+          <!--</ion-item>-->
+          <ion-item *ngFor="let item of cv.filedinhkem">
+            {{item.tenfile}}
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+  </ion-content>
+  <div *ngIf="view == 'noidung'">
+    <ion-footer no-border >
+      <ion-row class="cv-footer">
+        <ion-col col-6>
+          <button class="btn-green" block ion-button (tap)="Duyet(cv)" [disabled]="cv.trangthai !== 'Chờ duyệt'">Duyệt</button>
+        </ion-col>
+        <ion-col col-6>
+          <button class="btn-red" block ion-button (tap)="Huy(cv)" [disabled]="cv.trangthai !== 'Chờ duyệt'">Hủy</button>
+        </ion-col>
+      </ion-row>
+    </ion-footer>
+  </div>

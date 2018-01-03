@@ -1,0 +1,31 @@
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col no-padding>
+        <ion-list>
+          <img class="login-logo" src="assets/images/logo.png">
+          <form [formGroup]="loginForm" (ngSubmit)="signin(loginForm.value)">
+            <ion-row>
+              <ion-col no-padding>
+                <ion-item>
+                  <ion-label for="email" stacked>Tên đăng nhập</ion-label>
+                  <ion-input type="email" id="Username" formControlName="Username"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label for="password" stacked>Mật khẩu</ion-label>
+                  <ion-input type="password" id="Password" formControlName="Password"></ion-input>
+                </ion-item>
+                <!-- <ion-item>
+                  <ion-label>Ghi nhớ</ion-label>
+                  <ion-checkbox color="danger" formControlName="is_remember"></ion-checkbox>
+                </ion-item> -->
+                <br/>
+                <button ion-button block type="submit" [disabled]="!loginForm.valid || btn_dis" class="btn-red">Đăng nhập</button>
+              </ion-col>
+            </ion-row>
+          </form>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar >
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Đơn xin nghỉ</ion-title>
+    <ion-buttons right>
+    <button ion-button (tap)="getDon()">
+      <img src="assets/icon/refresh.png" height="30px;">
+    </button>
+  </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div class="container">
+    <div class="tab-list">
+      <ion-list no-lines>
+        <div *ngFor="let item of lich_hop">
+          <div class="list-head item-congviec">
+            <img src="assets/icon/calendar-blue.png" *ngIf="item.trangthai ==='Mới khởi tạo' || item.trangthai ==='Chờ duyệt'">
+            <img src="assets/icon/don-nghi-red.png" *ngIf="item.trangthai =='từ chối' || item.trangthai ==='Hủy' || item.trangthai =='Hoàn tất'">
+            <img src="assets/icon/calendar-green.png" *ngIf="item.trangthai =='Đã duyệt'">
+            <label class="color-{{item.trangthai === 'Mới khởi tạo' ? 0 : item.trangthai === 'Chờ duyệt' ? 1 : item.trangthai === 'Đã duyệt' ? 2 : item.trangthai =='từ chối' ? 3 : item.trangthai =='Hủy' ? 4 : 5}}">
+            {{item.batdau | date: 'dd/MM/yyyy H:mm'}} - {{item.ketthuc | date: 'dd/MM/yyyy H:mm'}}</label>
+          </div>
+          <ion-item-sliding >
+            <ion-item class="item-tab-list">
+              <div class="list-detail">
+                <h3 class="title-cv">{{item.ng_nghi}}</h3>
+                <p class="p-cv">Lý do:</p>
+                <p class="p-cv-noidung">- {{item.lydo}}</p>
+              </div>
+            </ion-item>
+            <ion-item-options side="left" [style.width.%]="100">
+              <div class="swip-btn">
+                <button class="btn-blue" ion-button (tap)="detail(item)"><img src="assets/icon/detail.png" height="25px"></button>
+                <!-- <button class="btn-green" ion-button (tap)="agree(item)" [disabled]="item.trangthai !== 'Chờ duyệt'"><img src="assets/icon/ok.png" height="25px"></button>
+                <button class="btn-red" ion-button (tap)="delete(item)" [disabled]="item.trangthai !== 'Chờ duyệt' "><img src="assets/icon/deny.png" height="25px"></button> -->
+              </div>
+            </ion-item-options>
+          </ion-item-sliding>
+        </div>
+      </ion-list>
+    </div>
+  </div>
+  <ion-fab right bottom>
+    <button ion-fab color="danger" (tap)="gotoCreate()"><ion-icon name="add" class="icon-big"></ion-icon></button>
+  </ion-fab>
+
+</ion-content>

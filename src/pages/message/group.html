@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar class="toolbar-danger">
+    <ion-buttons left>
+      <button ion-button navPop>
+        <img src="assets/icon/back-white.png" height="30px;">
+      </button>
+    </ion-buttons>
+    <ion-title *ngIf="userInGroup.length>0; else no_change" (tap)="changeGroupName()">{{room_name}}</ion-title>
+    <ng-template #no_change>
+      <ion-title>{{room_name}}</ion-title>
+    </ng-template>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding class="content-message gopy">
+
+  <ion-item *ngIf="this.userInGroup.length <= 0" (tap)="presentContactModal()">
+    <ion-label style="color: #777">Tap here to add friends</ion-label>
+  </ion-item>
+
+  <ion-item *ngIf="this.userInGroup.length > 0" (tap)="updateContactModal()">
+    <ion-label style="color: #777">Tap here to add more friends</ion-label>
+  </ion-item>
+
+
+  <br/>
+  <div *ngFor="let item of list_chat">
+    <ion-item class="chat-item me" *ngIf="item?.msnv === service.user_info['ID_']; else friend">
+      <span>{{item?.message}}</span>
+      <small item-end>{{item.timestamp | date: "dd/MM H:mm" }}</small>
+    </ion-item>
+
+    <ng-template #friend>
+      <ion-item class="chat-item">
+        <strong>{{item?.name}} : </strong>
+        <span style="text-align: left;">{{item?.message}}</span>
+        <small item-end>{{item.timestamp | date: "dd/MM H:mm" }}</small>
+      </ion-item>
+    </ng-template>
+  </div>
+  <ion-list>
+
+  </ion-list>
+  <ion-list class="fixed-bottom" *ngIf="userInGroup.length>0">
+    <ion-item>
+      <div class="content" id="input_message{{service.user_info['ID_']}}" contenteditable="true" placeholder="Write a message"></div>
+      <button ion-button type="button" (tap)="sendMessage()"><img src="assets/icon/send.png"></button>
+    </ion-item>
+  </ion-list>
+</ion-content>
+

@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar >
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Danh sách</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div class="container">
+    <div class="tab-list">
+      <ion-list no-lines>
+        <div *ngFor="let item of lich_hop">
+          <div class="list-head">
+            <img src="assets/icon/calendar-blue.png" *ngIf="item.trangthai ==='Mới khởi tạo' || item.trangthai ==='Chờ duyệt'">
+            <img src="assets/icon/calendar.png" *ngIf="item.trangthai =='từ chối' || item.trangthai ==='Hủy' || item.trangthai =='Hoàn tất'">
+            <img src="assets/icon/calendar-green.png" *ngIf="item.trangthai =='Đã duyệt'">
+            <label class="color-{{item.trangthai === 'Mới khởi tạo' ? 0 : item.trangthai === 'Chờ duyệt' ? 1 : item.trangthai === 'Đã duyệt' ? 2 : item.trangthai =='từ chối' ? 3 : item.trangthai =='Hủy' ? 4 : 5}}">
+            {{item.startTime | date: 'dd/MM/yyyy'}} {{item.startTime | date: 'H:mm'}} - {{item.endTime | date: 'H:mm'}}</label>
+          </div>
+          <ion-item-sliding >
+            <ion-item class="item-tab-list">
+              <div class="list-detail">
+                <h3 class="title ">{{item.title}}</h3>
+                <ul style="padding-bottom: 10px;">
+                  <li>- {{item.location}}</li>
+                  <li>- Chủ trì: {{item.chutri}}</li>
+                </ul>
+              </div>
+            </ion-item>
+            <ion-item-options side="left" [style.width.%]="100">
+              <div class="swip-btn">
+                <button class="btn-blue" ion-button (tap)="detail(item)"><img src="assets/icon/detail.png" height="25px"></button>
+                <div [hidden]="item.role != 3">
+                <button class="btn-green" ion-button (tap)="agree(item)" [disabled]="item.trangthai !== 'Chờ duyệt'"><img src="assets/icon/ok.png" height="25px"></button>
+                <button class="btn-red" ion-button (tap)="delete(item)" [disabled]="item.trangthai !== 'Chờ duyệt' "><img src="assets/icon/deny.png" height="25px"></button>
+                </div>
+              </div>
+            </ion-item-options>
+          </ion-item-sliding>
+        </div>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>

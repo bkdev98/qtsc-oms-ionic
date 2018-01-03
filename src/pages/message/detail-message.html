@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar class="toolbar-danger">
+    <ion-buttons left>
+      <button ion-button navPop>
+        <img src="assets/icon/back-white.png" height="30px;">
+      </button>
+    </ion-buttons>
+    <ion-title>{{user?.HoVaTen}}</ion-title>
+    <ion-buttons right>
+      <button ion-button>
+        <img src="assets/icon/refresh.png" height="30px;"></button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding class="content-message gopy">
+  <ion-list>
+    <div *ngFor="let item of messages">
+      <ion-item class="chat-item me" *ngIf="item?.msnv === service.user_info['ID_']; else friend">
+        <span>{{item?.message}}</span>
+        <small item-end>{{item.timestamp | date: "dd/MM H:mm" }}</small>
+      </ion-item>
+
+      <ng-template #friend>
+        <ion-item class="chat-item">
+          <!--<strong>{{item?.name}} : </strong>-->
+          <span style="text-align: left;">{{item?.message}}</span>
+          <small item-end>{{item.timestamp | date: "dd/MM H:mm" }}</small>
+        </ion-item>
+      </ng-template>
+    </div>
+  </ion-list>
+  <ion-list class="fixed-bottom">
+    <ion-item>
+      <div class="content" id="input_message{{service.user_info['ID_']}}" contenteditable="true"
+           placeholder="Write a message"></div>
+      <button ion-button type="button" (tap)="sendMessage()"><img src="assets/icon/send.png"></button>
+    </ion-item>
+  </ion-list>

@@ -1,0 +1,19 @@
+<ion-content padding>
+  <ion-searchbar disabled="{{users.length > 0 ? 'false': 'disabled'}}" class="search-bar" (ionInput)="getItems($event)"></ion-searchbar>
+  <ion-list padding-bottom="45px">
+    <ion-item *ngFor="let item of users">
+      <ion-label>{{item.HoVaTen}}</ion-label>
+      <ion-checkbox checked="{{item.checked || false}}" disabled="{{item.disabled || false}}" (ionChange)="updateUserSelected(item)"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+  <ion-footer no-border style="position:fixed;bottom: 0;left: 0;right: 0;">
+    <ion-row class="cv-footer">
+      <ion-col col-6>
+        <button class="btn-red" block ion-button (tap)="dismiss('cancel')">Cancel</button>
+      </ion-col>
+      <ion-col col-6>
+        <button class="btn-green" block ion-button (tap)="dismiss('success')">Add</button>
+      </ion-col>
+    </ion-row>
+  </ion-footer>
+</ion-content>

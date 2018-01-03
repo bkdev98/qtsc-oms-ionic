@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Tin nhắn</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="content-message">
+  <ion-searchbar class="search-bar" (ionInput)="getItems($event)"></ion-searchbar>
+  <ion-list>
+
+    <ion-item-sliding *ngFor="let item of items">
+      <ion-item (tap)="viewMessage(item)" (click)="removeConversation(item, event)">
+        <ion-avatar item-start>
+          <img src="assets/icon/person.png">
+        </ion-avatar>
+
+        <h2><b>{{item.data.user1?.msnv === service.user_info['ID_'] ? item.data.user2.name : item.data.user1?.name}}</b></h2>
+        <p>{{item.data.message}}</p>
+        <small item-end>{{item.data.timestamp | date: "dd/MM H:mm"}}</small>
+      </ion-item>
+      <ion-item-options side="right" [style.width.px]="50">
+        <div class="swip-btn" style="max-height: 63px;overflow: hidden">
+          <button color="danger" ion-button (tap)="removeItem(item, 'single')"><img src="assets/icon/deny.png" height="25px"></button>
+        </div>
+      </ion-item-options>
+    </ion-item-sliding>
+    <ion-item-sliding *ngFor="let item of groups">
+      <ion-item (tap)="viewGroupMessage(item)">
+        <ion-avatar item-start>
+          <img src="assets/icon/user-groups.png">
+        </ion-avatar>
+        <h2><strong>{{item.name}}</strong></h2>
+        <small item-end>{{item.timestamp | date: "dd/MM H:mm"}}</small>
+      </ion-item>
+      <ion-item-options side="right" [style.width.px]="50">
+        <div class="swip-btn" style="max-height: 56px;overflow: hidden">
+          <button color="danger" ion-button (tap)="removeItem(item, 'group')"><img src="assets/icon/deny.png" height="25px"></button>
+        </div>
+      </ion-item-options>
+    </ion-item-sliding>
+
+
+
+  </ion-list>
+</ion-content>
+
+<ion-fab right bottom>
+  <button ion-fab color="danger" (tap)="createGroup()"><ion-icon name="add" class="icon-big"></ion-icon></button>
+</ion-fab>

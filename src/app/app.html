@@ -1,0 +1,37 @@
+<ion-menu [content]="content">
+  <ion-header>
+    <ion-toolbar class="menu-heading toolbar-gray">
+      <img src="assets/images/logo.png" class="logo"/>
+      <ul class="list-inline list-unstyled list-info">
+        <li><img src="assets/icon/person-circle.png" class="icon menu"> <b style="position: relative;top:-5px;">{{service.user_info?.Name}}</b></li>
+        <li (tap)="logout()">Đăng xuất</li>
+      </ul>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list class="no-bg">
+    <div *ngFor="let p of page1">
+      <button menuClose ion-item [hidden]="p.title=='Duyệt Đơn' && hide_duyetdon" (click)="openPage(p)" class="middle">
+        <img class="icon menu" src="assets/icon/{{p.icon}}.png"> <span class="text-danger">{{p.title}}</span>
+      </button>
+      </div>
+    </ion-list>
+    <hr/>
+    <ion-list class="no-bg">
+      <button menuClose ion-item *ngFor="let p of page2" (click)="openPage(p)" class="middle">
+        <img class="icon menu" src="assets/icon/{{p.icon}}.png"> <span class="text-danger">{{p.title}}</span>
+      </button>
+    </ion-list>
+    <hr/>
+    <!--<ion-list class="no-bg">-->
+      <!--<button menuClose ion-item (click)="openPage(p)">-->
+        <!--<img class="icon menu" src="assets/icon/cog.png"> <span class="text-danger">Cài Đặt</span>-->
+      <!--</button>-->
+    <!--</ion-list>-->
+  </ion-content>
+
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

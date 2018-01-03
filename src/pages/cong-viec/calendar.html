@@ -1,0 +1,69 @@
+<ion-header>
+	<ion-navbar >
+		<button ion-button menuToggle>
+			<ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-title (tap)="tapIonDate()">
+			<ion-datetime
+			displayFormat="MM-YYYY"
+			pickerFormat="MMMM YYYY"
+			[(ngModel)]="myDate"
+			(ionChange)="changeData()"
+			cancelText="Hủy"
+			max="2050"
+			doneText="Chọn"
+			monthNames="Tháng một, Tháng hai, Tháng ba, Tháng tư, Tháng năm, Tháng sáu, Tháng bảy, Tháng tám, Tháng chín, Tháng mười, Tháng 11, Tháng 12">
+		</ion-datetime>
+	</ion-title>
+	<ion-buttons right>
+		<button ion-button (tap)="getCongviec()">
+			<img src="assets/icon/refresh.png" height="30px;">
+		</button>
+	</ion-buttons>
+</ion-navbar>
+</ion-header>
+<ion-content>
+	<div style="padding-top: 10px">
+		<calendar [eventSource]="lich_hop"
+		[queryMode]="cvcalendar.queryMode"
+		[calendarMode]="cvcalendar.mode"
+		[currentDate]="cvcalendar.currentDate"
+		[dateFormatter]="cvcalendar.dateFormatter"
+		(onCurrentDateChanged)="onCurrentDateChanged($event)"
+		(onRangeChanged)="onRangeChanged($event)"
+		(onEventSelected)="onEventSelected($event)"
+		(onTitleChanged)="onViewTitleChanged($event)"
+		(onTimeSelected)="onTimeSelected($event)"
+		[monthviewEventDetailTemplate]="templateEvent"
+		step="30">
+	</calendar>
+</div>
+<ng-template #templateEvent let-showEventDetail="showEventDetail" let-selectedDate="selectedDate" let-noEventsLabel="noEventsLabel">
+	<div class="container">
+		<h2 class="text-red" *ngIf="selectedDate?.events.length > 0">Công việc</h2>
+		<ion-list class="calendar">
+			<ion-item-sliding *ngFor="let item of selectedDate?.events" >
+				<ion-item class="list-calendar" no-lines>
+					<div class="box-status box-status-{{item.color}}"></div>
+					<p>
+						<label style="font-weight: 500">{{item.title}}</label>
+					</p>
+					<p>
+						<label>Bắt đầu: </label>{{item.batdau | date: 'dd/MM/yyyy'}}
+					</p>
+					<p><label>Hoàn thành: </label>{{item.ketthuc | date: 'dd/MM/yyyy'}}</p>
+				</ion-item>
+				<ion-item-options side="left" [style.width.%]="100">
+					<div class="swip-btn">
+						<button class="btn-blue" ion-button (tap)="detail(item)"><img src="assets/icon/detail.png" height="25px"></button>
+						<div [hidden]="item.role !=3">
+						<button class="btn-green" ion-button (tap)="agree(item)" [disabled]="item.trangthai !== 'Chờ duyệt'"><img src="assets/icon/ok.png" height="25px"></button>
+						<button class="btn-red" ion-button (tap)="delete(item)" [disabled]="item.trangthai !== 'Chờ duyệt'"><img src="assets/icon/deny.png" height="25px"></button>
+						</div>
+					</div>
+				</ion-item-options>
+			</ion-item-sliding>
+		</ion-list>
+	</div>
+</ng-template>
+</ion-content>

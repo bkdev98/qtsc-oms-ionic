@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-navbar class="toolbar-danger">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Thông báo</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+	<ion-list>
+		<ion-item no-lines *ngFor="let item of notifications" class="thongbao-item">
+			<div class="content">
+				<img src="assets/icon/bag.png">
+				<div class="detail">
+					<p class="time">{{item.OnDate | date: 'hh'}}h{{item.OnDate | date: 'mm'}}:</p>
+					<p class="notification">{{item.Notification}}</p>
+				</div>
+			</div>
+		</ion-item>
+	</ion-list>
+</ion-content>
